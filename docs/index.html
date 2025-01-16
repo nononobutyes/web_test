@@ -11,29 +11,31 @@
             margin: 0;
             padding: 0;
             background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
         }
 
         /* 主容器样式 */
         .container {
             display: flex;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
+            width: 100%;
+            height: 100vh;
+            padding: 2vh;
+            box-sizing: border-box;
         }
 
         /* 左侧个人介绍部分 */
         .profile-section {
             flex: 1;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 3vh;
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 30px;
             margin-right: 20px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            backdrop-filter: blur(4px);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* 添加背景装饰 */
@@ -46,27 +48,35 @@
             height: 200%;
             background: linear-gradient(
                 45deg,
-                rgba(142, 197, 252, 0.1) 0%,
-                rgba(224, 195, 252, 0.1) 100%
+                rgba(142, 197, 252, 0.08) 0%,
+                rgba(224, 195, 252, 0.08) 100%
             );
             transform: rotate(-45deg);
             z-index: 0;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { transform: rotate(-45deg) translate(0, 0); }
+            50% { transform: rotate(-45deg) translate(5%, 5%); }
+            100% { transform: rotate(-45deg) translate(0, 0); }
         }
 
         .avatar-container {
             position: relative;
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 4vh;
         }
 
         .avatar {
-            width: 180px;
-            height: 180px;
+            width: min(180px, 15vw);
+            height: min(180px, 15vw);
             border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
             object-fit: cover;
-            border: 5px solid #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 25px rgba(142, 197, 252, 0.2);
             animation: morphAvatar 8s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
 
         @keyframes morphAvatar {
@@ -81,36 +91,41 @@
         }
 
         .profile-info h2 {
-            color: #8ec5fc;
-            margin-bottom: 30px;
-            font-size: 2em;
+            color: rgba(142, 197, 252, 0.9);
+            margin-bottom: 3vh;
+            font-size: clamp(1.8em, 2.2vw, 2.4em);
             text-align: center;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            font-weight: 600;
         }
 
         /* 个人信息卡片样式 */
         .info-card {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 15px 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.2vh 2vh;
+            border-radius: 20px;
+            margin-bottom: 1.5vh;
             transform: translateX(0);
-            transition: transform 0.3s ease;
+            transition: all 0.4s ease;
             cursor: pointer;
             display: flex;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
         }
 
         .info-card:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.95);
+            transform: translateX(10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 20px rgba(142, 197, 252, 0.15);
         }
 
         .info-icon {
-            font-size: 24px;
+            font-size: clamp(20px, 2.2vw, 26px);
             margin-right: 15px;
-            color: #8ec5fc;
+            color: rgba(142, 197, 252, 0.9);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .info-content {
@@ -119,13 +134,15 @@
 
         .info-label {
             font-size: 0.9em;
-            color: #666;
-            margin-bottom: 3px;
+            color: rgba(102, 102, 102, 0.9);
+            margin-bottom: 4px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
         .info-value {
-            color: #333;
+            color: rgba(51, 51, 51, 0.9);
             font-weight: 500;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
         /* 标签云样式 */
@@ -133,98 +150,375 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            margin-top: 30px;
+            margin-top: 2vh;
+            margin-bottom: 2vh;
         }
 
         .tag {
-            background: rgba(142, 197, 252, 0.2);
-            padding: 8px 15px;
+            background: rgba(142, 197, 252, 0.15);
+            padding: 6px 12px;
             border-radius: 20px;
-            color: #333;
-            font-size: 0.9em;
+            color: rgba(51, 51, 51, 0.9);
+            font-size: 0.85em;
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
         .tag:hover {
-            background: rgba(142, 197, 252, 0.4);
-            transform: translateY(-2px);
+            background: rgba(142, 197, 252, 0.25);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(142, 197, 252, 0.2);
         }
 
         /* 右侧按钮部分 */
         .buttons-section {
             flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
             position: relative;
+            height: 100%;
+            overflow: hidden;
         }
 
-        /* 圆形漂浮按钮样式 */
+        /* 泡泡按钮样式 */
         .floating-button {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            backdrop-filter: blur(4px);
+            width: min(140px, 14vw);
+            height: min(140px, 14vw);
+            position: absolute;
+            background: transparent;
             border: none;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .floating-button:nth-child(even) {
-            animation-delay: 1.5s;
+        /* 设置每个泡泡的初始位置和动画 */
+        .floating-button:nth-child(1) {
+            top: 15%;
+            left: 20%;
+            animation: float1 6s ease-in-out infinite;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0px);
-            }
+        .floating-button:nth-child(2) {
+            top: 60%;
+            left: 15%;
+            animation: float2 8s ease-in-out infinite;
+        }
+
+        .floating-button:nth-child(3) {
+            top: 30%;
+            left: 60%;
+            animation: float3 7s ease-in-out infinite;
+        }
+
+        .floating-button:nth-child(4) {
+            top: 70%;
+            left: 55%;
+            animation: float4 9s ease-in-out infinite;
+        }
+
+        .floating-button:nth-child(5) {
+            top: 40%;
+            left: 35%;
+            animation: float5 10s ease-in-out infinite;
+        }
+
+        /* 泡泡漂浮动画 */
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(10px, 15px) scale(1.05); }
+            50% { transform: translate(-5px, -10px) scale(1); }
+            75% { transform: translate(-15px, 5px) scale(0.95); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-15px, -10px) scale(0.95); }
+            50% { transform: translate(10px, 15px) scale(1.05); }
+            75% { transform: translate(5px, -5px) scale(1); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(15px, -15px) scale(1.05); }
+            50% { transform: translate(-10px, 10px) scale(0.95); }
+            75% { transform: translate(5px, 15px) scale(1); }
+        }
+
+        @keyframes float4 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-10px, 10px) scale(0.95); }
+            50% { transform: translate(15px, -5px) scale(1.05); }
+            75% { transform: translate(-5px, -15px) scale(1); }
+        }
+
+        @keyframes float5 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(15px, 10px) scale(1.05); }
+            50% { transform: translate(-15px, -10px) scale(0.95); }
+            75% { transform: translate(10px, -5px) scale(1); }
+        }
+
+        .floating-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.6s ease;
+            filter: blur(4px);
+            box-shadow: 
+                inset -10px -10px 20px rgba(255, 255, 255, 0.3),
+                inset 10px 10px 20px rgba(255, 255, 255, 0.3),
+                0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .floating-button::after {
+            content: '';
+            position: absolute;
+            top: 8%;
+            left: 15%;
+            width: 30%;
+            height: 30%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.6s ease;
+            transform: rotate(-45deg);
+        }
+
+        /* 添加第二个光斑 */
+        .floating-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.15) 0%,
+                rgba(255, 255, 255, 0.05) 100%
+            );
+            border-radius: 50%;
+            z-index: -2;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-button .bubble-shine {
+            position: absolute;
+            width: 15%;
+            height: 15%;
+            background: radial-gradient(
+                circle at center,
+                rgba(255, 255, 255, 0.9) 0%,
+                rgba(255, 255, 255, 0.4) 50%,
+                transparent 100%
+            );
+            border-radius: 50%;
+            top: 25%;
+            right: 20%;
+            transform: rotate(45deg);
+            z-index: -1;
         }
 
         .floating-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.25);
         }
 
+        .floating-button:hover::before {
+            background: linear-gradient(
+                135deg,
+                rgba(142, 197, 252, 0.2) 0%,
+                rgba(224, 195, 252, 0.1) 100%
+            );
+            box-shadow: 
+                inset -15px -15px 30px rgba(255, 255, 255, 0.4),
+                inset 15px 15px 30px rgba(255, 255, 255, 0.4),
+                0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .floating-button:hover::after {
+            transform: rotate(-35deg) scale(1.2);
+        }
+
+        /* 修改图标和文字样式使其在透明背景上更清晰 */
         .floating-button .icon {
-            font-size: 32px;
-            margin-bottom: 10px;
+            font-size: clamp(24px, 2.5vw, 28px);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
         }
 
         .floating-button h3 {
             margin: 0;
-            font-size: 16px;
-            color: #333;
+            font-size: clamp(12px, 1.2vw, 14px);
+            color: rgba(51, 51, 51, 0.9);
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
 
-        /* 响应式设计 */
+        /* 添加彩虹色边缘效果 */
+        @keyframes rainbow-edge {
+            0% { border-color: rgba(255, 255, 255, 0.2); }
+            33% { border-color: rgba(142, 197, 252, 0.2); }
+            66% { border-color: rgba(224, 195, 252, 0.2); }
+            100% { border-color: rgba(255, 255, 255, 0.2); }
+        }
+
+        /* 响应式设计调整 */
         @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
-            }
-            .profile-section {
-                margin-right: 0;
-                margin-bottom: 20px;
+            .buttons-section {
+                height: 70vh;
+                margin-top: 2vh;
             }
             .floating-button {
-                width: 120px;
-                height: 120px;
+                width: min(110px, 22vw);
+                height: min(110px, 22vw);
             }
+            /* 调整移动端泡泡位置 */
+            .floating-button:nth-child(1) { top: 10%; left: 15%; }
+            .floating-button:nth-child(2) { top: 50%; left: 10%; }
+            .floating-button:nth-child(3) { top: 25%; left: 55%; }
+            .floating-button:nth-child(4) { top: 60%; left: 50%; }
+            .floating-button:nth-child(5) { top: 35%; left: 30%; }
+        }
+
+        /* 弹窗背景 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* 弹窗容器 */
+        .contact-modal {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-overlay.active .contact-modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* 关闭按钮 */
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: rgba(51, 51, 51, 0.9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        /* 表单样式 */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-title {
+            color: rgba(51, 51, 51, 0.9);
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(51, 51, 51, 0.9);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .form-input::placeholder {
+            color: rgba(51, 51, 51, 0.6);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(142, 197, 252, 0.5);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        textarea.form-input {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, rgba(142, 197, 252, 0.8), rgba(224, 195, 252, 0.8));
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(142, 197, 252, 0.3);
         }
     </style>
 </head>
@@ -233,7 +527,7 @@
         <!-- 左侧个人介绍 -->
         <section class="profile-section">
             <div class="avatar-container">
-                <img src="你的照片URL" alt="VV的自画像" class="avatar">
+                <img src="/rose.jpg" alt="VV的自画像" class="avatar">
             </div>
             <div class="profile-info">
                 <h2>Hello, I'm VV</h2>
@@ -242,7 +536,7 @@
                     <div class="info-icon">👤</div>
                     <div class="info-content">
                         <div class="info-label">姓名</div>
-                        <div class="info-value">VV</div>
+                        <div class="info-value">小菠萝🍍</div>
                     </div>
                 </div>
 
@@ -258,7 +552,7 @@
                     <div class="info-icon">✨</div>
                     <div class="info-content">
                         <div class="info-label">性格</div>
-                        <div class="info-value">开朗活泼，热爱生活</div>
+                        <div class="info-value">热爱生活的睡觉大王</div>
                     </div>
                 </div>
 
@@ -266,16 +560,17 @@
                     <div class="info-icon">📍</div>
                     <div class="info-content">
                         <div class="info-label">现居地</div>
-                        <div class="info-value">上海</div>
+                        <div class="info-value">北京</div>
                     </div>
                 </div>
 
                 <div class="tags-container">
                     <span class="tag">积极乐观</span>
-                    <span class="tag">热爱学习</span>
                     <span class="tag">追求进步</span>
                     <span class="tag">创新思维</span>
                     <span class="tag">团队协作</span>
+                    <span class="tag">热爱生活</span>
+                    <span class="tag">优点写不下啦</span>
                 </div>
             </div>
         </section>
@@ -283,30 +578,89 @@
         <!-- 右侧漂浮按钮 -->
         <section class="buttons-section">
             <button class="floating-button">
+                <div class="bubble-shine"></div>
                 <div class="icon">💻</div>
                 <h3>专业技能</h3>
             </button>
 
             <button class="floating-button">
+                <div class="bubble-shine"></div>
                 <div class="icon">⭐</div>
                 <h3>兴趣爱好</h3>
             </button>
 
             <button class="floating-button">
+                <div class="bubble-shine"></div>
                 <div class="icon">🚀</div>
                 <h3>项目经历</h3>
             </button>
 
             <button class="floating-button">
+                <div class="bubble-shine"></div>
                 <div class="icon">📚</div>
                 <h3>学习经历</h3>
             </button>
 
             <button class="floating-button">
+                <div class="bubble-shine"></div>
                 <div class="icon">📫</div>
                 <h3>联系我</h3>
             </button>
         </section>
     </div>
+
+    <!-- 在body标签最后，container div之后添加弹窗HTML -->
+    <div class="modal-overlay">
+        <div class="contact-modal">
+            <button class="close-modal">×</button>
+            <form class="contact-form">
+                <h2 class="form-title">给我留言</h2>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="你的名字" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="你的邮箱" required>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-input" placeholder="想对我说的话..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">发送消息</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const contactButton = document.querySelector('.floating-button:last-child');
+        const modalOverlay = document.querySelector('.modal-overlay');
+        const closeButton = document.querySelector('.close-modal');
+        const contactForm = document.querySelector('.contact-form');
+
+        // 打开弹窗
+        contactButton.addEventListener('click', () => {
+            modalOverlay.classList.add('active');
+        });
+
+        // 关闭弹窗
+        closeButton.addEventListener('click', () => {
+            modalOverlay.classList.remove('active');
+        });
+
+        // 点击背景关闭弹窗
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+            }
+        });
+
+        // 处理表单提交
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // 这里可以添加表单提交的逻辑
+            alert('消息已发送！感谢你的留言～');
+            modalOverlay.classList.remove('active');
+            contactForm.reset();
+        });
+    </script>
 </body>
 </html>
