@@ -1,11 +1,312 @@
-<!DOCTYPE html> <!-- 声明这是一个html5文档 -->
-<html lang="zh"> <!-- 声明这是一个中文网页 -->
-<head> <!-- 头部标签，包含文档的元数据和链接 -->
-    <meta charset="UTF-8"> <!-- 声明字符编码为UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 声明视口宽度为设备宽度，初始缩放比例为1 -->
-    <title>测试页面</title> <!-- 设置文档标题 -->
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VV的个人空间</title>
+    <style>
+        /* 整体样式 */
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            min-height: 100vh;
+        }
+
+        /* 主容器样式 */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* 左侧个人介绍部分 */
+        .profile-section {
+            flex: 1;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            margin-right: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 添加背景装饰 */
+        .profile-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(142, 197, 252, 0.1) 0%,
+                rgba(224, 195, 252, 0.1) 100%
+            );
+            transform: rotate(-45deg);
+            z-index: 0;
+        }
+
+        .avatar-container {
+            position: relative;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            animation: morphAvatar 8s ease-in-out infinite;
+        }
+
+        @keyframes morphAvatar {
+            0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; }
+            100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+        }
+
+        .profile-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-info h2 {
+            color: #8ec5fc;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 个人信息卡片样式 */
+        .info-card {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .info-card:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .info-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #8ec5fc;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* 标签云样式 */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .tag {
+            background: rgba(142, 197, 252, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #333;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(142, 197, 252, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* 右侧按钮部分 */
+        .buttons-section {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* 圆形漂浮按钮样式 */
+        .floating-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            backdrop-filter: blur(4px);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-button:nth-child(even) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.25);
+        }
+
+        .floating-button .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .floating-button h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            .profile-section {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            .floating-button {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
 </head>
-<body> <!-- 主体标签，包含文档的主体内容 -->
-    <h1>这是一个测试页面!！</h1> <!-- 设置标题 -->
+<body>
+    <div class="container">
+        <!-- 左侧个人介绍 -->
+        <section class="profile-section">
+            <div class="avatar-container">
+                <img src="你的照片URL" alt="VV的自画像" class="avatar">
+            </div>
+            <div class="profile-info">
+                <h2>Hello, I'm VV</h2>
+
+                <div class="info-card">
+                    <div class="info-icon">👤</div>
+                    <div class="info-content">
+                        <div class="info-label">姓名</div>
+                        <div class="info-value">VV</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🌸</div>
+                    <div class="info-content">
+                        <div class="info-label">性别</div>
+                        <div class="info-value">女</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">✨</div>
+                    <div class="info-content">
+                        <div class="info-label">性格</div>
+                        <div class="info-value">开朗活泼，热爱生活</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <div class="info-content">
+                        <div class="info-label">现居地</div>
+                        <div class="info-value">上海</div>
+                    </div>
+                </div>
+
+                <div class="tags-container">
+                    <span class="tag">积极乐观</span>
+                    <span class="tag">热爱学习</span>
+                    <span class="tag">追求进步</span>
+                    <span class="tag">创新思维</span>
+                    <span class="tag">团队协作</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 右侧漂浮按钮 -->
+        <section class="buttons-section">
+            <button class="floating-button">
+                <div class="icon">💻</div>
+                <h3>专业技能</h3>
+            </button>
+
+            <button class="floating-button">
+                <div class="icon">⭐</div>
+                <h3>兴趣爱好</h3>
+            </button>
+
+            <button class="floating-button">
+                <div class="icon">🚀</div>
+                <h3>项目经历</h3>
+            </button>
+
+            <button class="floating-button">
+                <div class="icon">📚</div>
+                <h3>学习经历</h3>
+            </button>
+
+            <button class="floating-button">
+                <div class="icon">📫</div>
+                <h3>联系我</h3>
+            </button>
+        </section>
+    </div>
 </body>
-</html> 
+</html>
