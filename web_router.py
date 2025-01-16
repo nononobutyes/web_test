@@ -1,6 +1,7 @@
 from flask import Flask, render_template # 应用flask框架
 
-app = Flask(__name__)
+app = Flask(__name__, 
+           template_folder='docs')  # 设置模板目录为docs文件夹
 
 @app.route('/weiwei/') # 定义根路由，当访问根路径时，返回index函数
 def index():
