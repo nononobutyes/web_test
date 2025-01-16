@@ -7,4 +7,4 @@ def index():
     return render_template('web_test.html') # 返回web_test.html页面
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True) # 运行app，debug=True表示启用调试模式.
+    app.run(host='0.0.0.0', port=8080, debug=True) # 运行app，debug=True表示启用调试模式...
