@@ -1,15 +1,20 @@
 from flask import Flask, render_template, request, jsonify
 import yagmail
+import os
+from dotenv import load_dotenv
+
+# 加载环境变量
+load_dotenv()
 
 app = Flask(__name__, 
            template_folder='docs',
            static_url_path='',
            static_folder='.')
 
-# 邮件配置
-SENDER_EMAIL = '2911901868@qq.com'  # 你的QQ邮箱
-SENDER_PASSWORD = 'mxpmolomkebpdhcd'  # QQ邮箱的授权码（不是登录密码）
-RECEIVER_EMAIL = '2911901868@qq.com'  # 接收消息的邮箱
+# 从环境变量获取邮件配置
+SENDER_EMAIL = os.getenv('SENDER_EMAIL')
+SENDER_PASSWORD = os.getenv('SENDER_PASSWORD')
+RECEIVER_EMAIL = os.getenv('RECEIVER_EMAIL')
 
 @app.route('/weiwei/')
 def index():
@@ -18,6 +23,13 @@ def index():
 @app.route('/submit_message', methods=['POST'])
 def submit_message():
     try:
+        # 检查环境变量是否存在
+        if not all([SENDER_EMAIL, SENDER_PASSWORD, RECEIVER_EMAIL]):
+            return jsonify({
+                'status': 'error',
+                'message': '邮件服务配置不完整，请检查环境变量'
+            })
+
         name = request.form.get('name')
         content = request.form.get('content')
 
