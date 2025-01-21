@@ -613,16 +613,13 @@
     <div class="modal-overlay">
         <div class="contact-modal">
             <button class="close-modal">×</button>
-            <form class="contact-form">
+            <form class="contact-form" id="contactForm">
                 <h2 class="form-title">给我留言</h2>
                 <div class="form-group">
-                    <input type="text" class="form-input" placeholder="你的名字" required>
+                    <input type="text" name="name" class="form-input" placeholder="你的名字" required>
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-input" placeholder="你的邮箱" required>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-input" placeholder="想对我说的话..." required></textarea>
+                    <textarea name="content" class="form-input" placeholder="想对我说的话..." required></textarea>
                 </div>
                 <button type="submit" class="submit-btn">发送消息</button>
             </form>
@@ -653,13 +650,30 @@
             }
         });
 
-        // 处理表单提交
-        contactForm.addEventListener('submit', (e) => {
+        // 修改表单提交处理
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            // 这里可以添加表单提交的逻辑
-            alert('消息已发送！感谢你的留言～');
-            modalOverlay.classList.remove('active');
-            contactForm.reset();
+            
+            const formData = new FormData(this);
+            
+            fetch('/submit_message', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('消息已发送！感谢你的留言～');
+                    this.reset();
+                    modalOverlay.classList.remove('active');
+                } else {
+                    alert('发送失败：' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('发送失败，请稍后重试');
+                console.error('Error:', error);
+            });
         });
     </script>
 </body>
