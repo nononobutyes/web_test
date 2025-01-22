@@ -20,6 +20,24 @@ RECEIVER_EMAIL = os.getenv('RECEIVER_EMAIL')
 def index():
     return render_template('index.html')
 
+def send_email(name, content):
+    # 创建邮件内容
+    message = f"""
+    收到新留言：
+    
+    姓名：{name}
+    内容：{content}
+    """
+
+    # 使用yagmail发送邮件
+    yag = yagmail.SMTP(user=SENDER_EMAIL, 
+                      password=SENDER_PASSWORD, 
+                      host='smtp.qq.com')
+    
+    yag.send(to=RECEIVER_EMAIL,
+            subject='个人网站新留言',
+            contents=message)
+
 @app.route('/submit_message', methods=['POST'])
 def submit_message():
     try:
@@ -33,22 +51,8 @@ def submit_message():
         name = request.form.get('name')
         content = request.form.get('content')
 
-        # 创建邮件内容
-        message = f"""
-        收到新留言：
-        
-        姓名：{name}
-        内容：{content}
-        """
-
-        # 使用yagmail发送邮件
-        yag = yagmail.SMTP(user=SENDER_EMAIL, 
-                          password=SENDER_PASSWORD, 
-                          host='smtp.qq.com')
-        
-        yag.send(to=RECEIVER_EMAIL,
-                subject='个人网站新留言',
-                contents=message)
+        # 调用发送邮件函数
+        send_email(name, content)
         
         return jsonify({'status': 'success', 'message': '消息已发送'})
 
