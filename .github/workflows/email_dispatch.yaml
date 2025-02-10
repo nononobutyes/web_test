@@ -1,0 +1,56 @@
+name: Send Email Workflow
+
+on:
+  repository_dispatch:
+    types: [send-email]
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yagmail python-dotenv
+          
+      - name: Send email
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+        run: |
+          python -c "
+          import yagmail
+          import os
+          
+          name = '${{ github.event.client_payload.name }}'
+          content = '${{ github.event.client_payload.content }}'
+          
+          message = f'''
+          收到新留言：
+          
+          姓名：{name}
+          内容：{content}
+          '''
+          
+          yag = yagmail.SMTP(
+              user=os.environ['SENDER_EMAIL'],
+              password=os.environ['SENDER_PASSWORD'],
+              host='smtp.qq.com'
+          )
+          
+          yag.send(
+              to=os.environ['RECEIVER_EMAIL'],
+              subject='个人网站新留言',
+              contents=message
+          )
+          " 
